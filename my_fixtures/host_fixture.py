@@ -15,7 +15,7 @@ class HostFixture(fixtures.Fixture):
         try:
             connection = client.connect(self.host, username=self.hostUser, pkey=self.hostKey, timeout=5)
         except Exception as e:
-            self.addDetail('error', text_content(str(e.msg)))
+            self.addDetail('error', text_content(str(e)))
             flag = True
         client.close()
         self.addCleanup(delattr, self, 'hostUser')
