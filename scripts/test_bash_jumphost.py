@@ -6,5 +6,5 @@ from testtools import TestCase
 
 class BashJumphostTests(WithAttributes,BaseTestCase):
     def test_square(self):
-        fixture = self.useFixture(HostFixture)
+        fixture = self.useFixture(HostFixture())
         self.assertThat(7 ** 2, Equals(fixture.testValue))

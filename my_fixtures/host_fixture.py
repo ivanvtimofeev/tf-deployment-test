@@ -2,5 +2,5 @@ import fixtures
 
 class HostFixture(fixtures.Fixture):
     def _setUp(self):
-        self.testVal = 42
-        self.addCleanup(delattr, self, 'testVal')
+        self.testValue = 49
+        self.addCleanup(delattr, self, 'testValue')
