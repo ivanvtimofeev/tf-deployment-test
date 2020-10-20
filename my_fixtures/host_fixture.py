@@ -16,9 +16,6 @@ class HostFixture(fixtures.Fixture):
         logger.level = logging.DEBUG
         logger.warning(u"DDDDD2 warnig")
         logger.debug(u"DDDDD3 debug")
-        logger.error(u"DDDDD4 error")
-        
-        print("BBBB")
 
         client = paramiko.SSHClient()
         client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
