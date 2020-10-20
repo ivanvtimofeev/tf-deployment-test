@@ -3,10 +3,7 @@ import paramiko
 import os
 import sys
 from testtools.content import text_content,attach_file
-
 import logging
-logger = logging.getLogger()
-logger.level = logging.DEBUG
 
 class HostFixture(fixtures.Fixture):
     def _setUp(self):
@@ -14,9 +11,13 @@ class HostFixture(fixtures.Fixture):
         self.hostKey = os.getenv("HOST_PK")
         self.host = os.getenv("HOST_URL")
 
-        stream_handler = logging.StreamHandler(sys.stdout)
-        logger.addHandler(stream_handler)
-        logging.getLogger().warning(u"DDDDD")
+        logging.basicConfig(level=logging.DEBUG)
+        logger = logging.getLogger(__name__)
+        logger.level = logging.DEBUG
+        logger.warning(u"DDDDD2 warnig")
+        logger.debug(u"DDDDD3 debug")
+        logger.error(u"DDDDD4 error")
+        
         print("BBBB")
 
         client = paramiko.SSHClient()
