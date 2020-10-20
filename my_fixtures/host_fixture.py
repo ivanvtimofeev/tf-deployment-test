@@ -1,13 +1,23 @@
 import fixtures
 import paramiko
 import os
+import sys
 from testtools.content import text_content,attach_file
+
+import logging
+logger = logging.getLogger()
+logger.level = logging.DEBUG
 
 class HostFixture(fixtures.Fixture):
     def _setUp(self):
         self.hostUser = os.getenv("HOST_USER")
         self.hostKey = os.getenv("HOST_PK")
         self.host = os.getenv("HOST_URL")
+
+        stream_handler = logging.StreamHandler(sys.stdout)
+        logger.addHandler(stream_handler)
+        logging.getLogger().debug(u"DDDDD")
+
         client = paramiko.SSHClient()
         client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
         flag = False

@@ -10,4 +10,4 @@ class BashJumphostTests(WithAttributes,BaseTestCase):
         super(BaseTestCase, self).setUp()
 
     def test_square(self):
-        self.assertThat(7 ** 2, Equals(50))
+        self.assertThat(7 ** 2, Equals(49))
