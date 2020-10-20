@@ -16,7 +16,8 @@ class HostFixture(fixtures.Fixture):
 
         stream_handler = logging.StreamHandler(sys.stdout)
         logger.addHandler(stream_handler)
-        logging.getLogger().debug(u"DDDDD")
+        logging.getLogger().warning(u"DDDDD")
+        print("BBBB")
 
         client = paramiko.SSHClient()
         client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
