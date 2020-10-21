@@ -10,10 +10,12 @@ logger = logging.getLogger(__name__)
 
 class BashJumphostTests(WithAttributes,BaseTestCase):
     def setUp(self):
-        logger.info("Sample of logger info")
-        self.hostConnection  =  self.useFixture(HostFixture())
         super(BaseTestCase, self).setUp()
 
     def test_square(self):
-        logger.info("Sample of logger info from test")
+        hostFixture = self.useFixture(HostFixture())
+        (stdin, stdout, stderr) = hostFixture.execOnHost("pwd")
+        for line in stdout.readlines():
+            logger.info("DDDD: line is %s " % line)
+
         self.assertThat(7 ** 2, Equals(49))

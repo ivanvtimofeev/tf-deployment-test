@@ -23,13 +23,17 @@ class HostFixture(fixtures.Fixture):
         key = paramiko.RSAKey.from_private_key_file('pk.key')
         self._client = paramiko.SSHClient()
         self._client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-        self.connection = self._client.connect(self.host, username=self.hostUser, key_filename = os.path.expanduser('pk.key'), timeout=5)
+        self._client.connect(self.host, username=self.hostUser, key_filename = os.path.expanduser('pk.key'), timeout=5)
 
         self.addCleanup(delattr, self, 'hostUser')
         self.addCleanup(delattr, self, 'hostKey')
         self.addCleanup(delattr, self, 'host')
-        self.addCleanup(self._closeSSHConnection)
+        self.addCleanup(self._client.close)
     
-    def _closeSSHConnection(self):
-        self._client.close()
+    #def _closeSSHConnection(self):
+    #    self._client.close()
+    def execOnHost(self, command):
+        if(not self._client):
+            raise AssertionError("ERROR: connection has not been set up yet")
+        return self._client.exec_command(command)
 
