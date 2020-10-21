@@ -5,6 +5,7 @@ import os
 class BaseTestCase(testtools.TestCase):
     def setUp(self):
         self.hostFixture = self.useFixture(HostFixture())
+        self.workspace_path = os.getenv('WORKSPACE')
         super(BaseTestCase, self).setUp()
 
     def check_cmd_on_host(self,cmd,logger):
@@ -17,7 +18,7 @@ class BaseTestCase(testtools.TestCase):
             logger.info("bash.stderr: %s " % line)
         self.assertFalse(bash_fails)
 
-    def run_bash_test_on_host(self, bash_file_name, logger,bash_local_test_dir = "/home/centos/tf-deployment-test/bash_tests", bash_remote_test_dir="/tmp/tf-deployment-test"):
+    def run_bash_test_on_host(self, bash_file_name, logger,bash_local_test_dir = os.path.join(os.getenv('WORKSPACE'), "bash_tests"), bash_remote_test_dir="/tmp/tf-deployment-test"):
         (stdin, stdout,stderr) = self.hostFixture.execOnHost("ls "+ bash_remote_test_dir)
         if stderr.readline():
             (_,_,stderr)=self.hostFixture.execOnHost("mkdir -p "+ bash_remote_test_dir)

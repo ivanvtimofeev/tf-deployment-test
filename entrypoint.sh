@@ -1,8 +1,15 @@
 #!/bin/bash -e
 
-source /root/.tf/stack.env
-cd "/home/centos/tf-deployment-test/"
-if [[ ! -f "/home/centos/tf-deployment-test/.testrepository" ]]; then
+source 
+my_file="$(readlink -e "$0")"
+my_dir="$(dirname $my_file)"
+
+if [[ -f /root/.tf/stack.env ]] ; then
+    source=/root/.tf/stack.env
+fi
+
+export WORKSPACE=$my_dir
+if [[ ! -f "$WORKSPACE/.testrepository" ]]; then
     testr init
 fi
 
