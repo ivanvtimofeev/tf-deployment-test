@@ -12,14 +12,17 @@ class BashJumphostTests(WithAttributes,BaseTestCase):
     def setUp(self):
         super(BaseTestCase, self).setUp()
 
-    def test_square(self):
-        logger = logging.getLogger(__name__ + '.test_square')
+    def checkCmdOnHost(self,cmd):
         hostFixture = self.useFixture(HostFixture())
-        (stdin, stdout, stderr) = hostFixture.execOnHost("pwddddd")
+        (stdin, stdout, stderr) = hostFixture.execOnHost(cmd)
         bash_fails = False
         for line in stdout.readlines():
-            logger.info("bash.stdout: line is %s " % line)
+            logger.info("bash.stdout: %s " % line)
         for line in stderr.readlines():
             bash_fails = True
-            logger.info("bash.stderr: line is %s " % line)
+            logger.info("bash.stderr: %s " % line)
         self.assertFalse(bash_fails)
+
+    def test_square(self):
+        logger = logging.getLogger(__name__ + '.test_square')
+        self.checkCmdOnHost("pwd")
