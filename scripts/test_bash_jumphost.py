@@ -5,7 +5,7 @@ from testtools.testcase import attr, WithAttributes
 from testtools import TestCase
 import logging
 
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 class BashJumphostTests(WithAttributes,BaseTestCase):
@@ -13,6 +13,7 @@ class BashJumphostTests(WithAttributes,BaseTestCase):
         super(BaseTestCase, self).setUp()
 
     def test_square(self):
+        logger = logging.getLogger(__name__ + '.test_square')
         hostFixture = self.useFixture(HostFixture())
         (stdin, stdout, stderr) = hostFixture.execOnHost("pwd")
         for line in stdout.readlines():
