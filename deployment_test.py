@@ -17,11 +17,14 @@ class BaseTestCase(testtools.TestCase):
             logger.info("bash.stderr: %s " % line)
         self.assertFalse(bash_fails)
 
-    def run_bash_test_on_host(self, bash_file_name, logger,bash_local_test_dir = "/home/centos/tf-deployment-test/bash_tests", bash_remote_test_dir="/temp/tf-deployment-test"):
+    def run_bash_test_on_host(self, bash_file_name, logger,bash_local_test_dir = "/home/centos/tf-deployment-test/bash_tests", bash_remote_test_dir="/tmp/tf-deployment-test"):
         (stdin, stdout,stderr) = self.hostFixture.execOnHost("ls "+ bash_remote_test_dir)
         if stderr.readline():
-            self.hostFixture.execOnHost("mkdir -p "+ bash_remote_test_dir)
+            (_,_,stderr)=self.hostFixture.execOnHost("mkdir -p "+ bash_remote_test_dir)
+            err = stderr.readline()
+            if err :
+                raise Exception(err)
         local_path = os.path.join(bash_local_test_dir,bash_file_name)
         remote_path = os.path.join(bash_remote_test_dir,bash_file_name)
         self.hostFixture.copyLocalFileToRemote(local_path,remote_path)
-        check_cmd_on_host(remote_path,logger)
+        self.check_cmd_on_host("/bin/bash " + remote_path,logger)

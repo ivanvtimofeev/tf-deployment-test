@@ -1,4 +1,4 @@
-from test import BaseTestCase
+from deployment_test import BaseTestCase
 from testtools.matchers import Equals
 from testtools.testcase import attr, WithAttributes
 import logging

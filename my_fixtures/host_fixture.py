@@ -17,7 +17,7 @@ class HostFixture(fixtures.Fixture):
             fd.write( self.hostKey )
 
         if( not self.hostUser or not self.hostKey or not self.host):
-            raise AssertionError("ERROR: Need to pass host credentials to  run the tests")
+            raise Exception("ERROR: Need to pass host credentials to run the tests")
 
         self._client = paramiko.SSHClient()
         self._client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
@@ -32,14 +32,13 @@ class HostFixture(fixtures.Fixture):
     #    self._client.close()
     def execOnHost(self, command):
         if(not self._client):
-            raise AssertionError("ERROR: connection has not been set up yet")
+            raise Exception("ERROR: connection has not been set up yet")
         return self._client.exec_command(command)
 
     def copyLocalFileToRemote(self,localPath, remotePath):
         logger = logging.getLogger()
-        logger.info("DDD localPath, remotePath = %s , %s ",localPath, remotePath)
         if(not self._client):
-            raise AssertionError("ERROR: connection has not been set up yet")
+            raise Exception("ERROR: connection has not been set up yet")
         ftp_client=self._client.open_sftp()
         ftp_client.put(localPath,remotePath)
         ftp_client.close()
