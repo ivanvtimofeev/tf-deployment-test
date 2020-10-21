@@ -35,7 +35,7 @@ class HostFixture(fixtures.Fixture):
             raise AssertionError("ERROR: connection has not been set up yet")
         return self._client.exec_command(command)
 
-    def copyLocalFileToRemote(localPath, remoteParh):
+    def copyLocalFileToRemote(self,localPath, remoteParh):
         if(not self._client):
             raise AssertionError("ERROR: connection has not been set up yet")
         ftp_client=self._client.open_sftp()
