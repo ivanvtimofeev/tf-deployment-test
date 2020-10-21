@@ -15,8 +15,11 @@ class BashJumphostTests(WithAttributes,BaseTestCase):
     def test_square(self):
         logger = logging.getLogger(__name__ + '.test_square')
         hostFixture = self.useFixture(HostFixture())
-        (stdin, stdout, stderr) = hostFixture.execOnHost("pwd")
+        (stdin, stdout, stderr) = hostFixture.execOnHost("pwddddd")
+        bash_fails = False
         for line in stdout.readlines():
-            logger.info("DDDD: line is %s " % line)
-
-        self.assertThat(7 ** 2, Equals(49))
+            logger.info("bash.stdout: line is %s " % line)
+        for line in stderr.readlines():
+            bash_fails = True
+            logger.info("bash.stderr: line is %s " % line)
+        self.assertFalse(bash_fails)
