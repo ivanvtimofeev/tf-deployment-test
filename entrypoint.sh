@@ -1,10 +1,10 @@
 #!/bin/bash -e
 
 source /root/.tf/stack.env
+cd "/home/centos/tf-deployment-test/"
+if [[ ! -f "/home/centos/tf-deployment-test/.testrepository" ]]; then
+    testr init
+fi
 
-# TODO: run tests
-
-# TODO: save logs
-
-# TODO: check result and print some message
-echo "INFO: tests finished"
+testr run
+    
