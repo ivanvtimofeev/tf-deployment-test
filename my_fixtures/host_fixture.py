@@ -19,8 +19,6 @@ class HostFixture(fixtures.Fixture):
         if( not self.hostUser or not self.hostKey or not self.host):
             raise AssertionError("ERROR: Need to pass host credentials to  run the tests")
 
-
-        key = paramiko.RSAKey.from_private_key_file('pk.key')
         self._client = paramiko.SSHClient()
         self._client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
         self._client.connect(self.host, username=self.hostUser, key_filename = os.path.expanduser('pk.key'), timeout=5)
