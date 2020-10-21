@@ -7,28 +7,25 @@ import logging
 
 class HostFixture(fixtures.Fixture):
     def _setUp(self):
+        
+        logger = logging.getLogger(__name__)
+
         self.hostUser = os.getenv("HOST_USER")
         self.hostKey = os.getenv("HOST_PK")
         self.host = os.getenv("HOST_URL")
 
-        logging.basicConfig(level=logging.DEBUG)
-        logger = logging.getLogger(__name__)
-        logger.level = logging.DEBUG
-        logger.warning(u"DDDDD2 warnig")
-        logger.debug(u"DDDDD3 debug")
+        if( not self.hostUser or not self.hostKey or not self.host):
+            raise AssertionError("ERROR: Need to pass host credentials to  run the tests")
 
-        client = paramiko.SSHClient()
-        client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-        flag = False
-        connection = ""
-        try:
-            connection = client.connect(self.host, username=self.hostUser, pkey=self.hostKey, timeout=5)
-        except Exception as e:
-            self.addDetail('error', text_content(str(e)))
-            flag = True
-        client.close()
+        self._client = paramiko.SSHClient()
+        self._client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+        self.connection = self._client.connect(self.host, username=self.hostUser, pkey=paramiko.RSAKey(data = bytes(self.hostKey,'utf-8')), timeout=5)
+
         self.addCleanup(delattr, self, 'hostUser')
         self.addCleanup(delattr, self, 'hostKey')
         self.addCleanup(delattr, self, 'host')
+        self.addCleanup(_closeSSHConnection,self)
     
+    def _closeSSHConnection(self):
+        self._client.close()
 
