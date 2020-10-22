@@ -12,7 +12,7 @@ class HostFixture(fixtures.Fixture):
 
         self.hostUser = os.getenv("HOST_USER")
         self.hostKey = os.getenv("HOST_PK")
-        self.host = os.getenv("HOST_URL")
+        self.host = os.getenv("HOST_ADDR")
         with open(os.path.expanduser('pk.key'),'w') as fd:
             fd.write( self.hostKey )
 
