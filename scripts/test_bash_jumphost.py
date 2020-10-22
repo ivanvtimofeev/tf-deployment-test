@@ -1,10 +1,8 @@
 from deployment_test import BaseTestCase
-from testtools.matchers import Equals
 from testtools.testcase import attr, WithAttributes
 import logging
 
 logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
 
 class BashJumphostTests(WithAttributes,BaseTestCase):
     def test_1(self):
