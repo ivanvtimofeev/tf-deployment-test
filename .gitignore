@@ -7,4 +7,5 @@ Dockerfile.nofromargs
 *.tgz
 *.gz
 *.zip
-
+pk.key
+report.xml
