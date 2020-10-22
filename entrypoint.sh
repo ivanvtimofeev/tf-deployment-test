@@ -4,7 +4,7 @@ my_dir="$(dirname $my_file)"
 
 set -x
 echo "DDDD HOST_KEY = $HOST_KEY"
-echo "DDDD HOST_ADDR = $HOST_USER"
+echo "DDDD HOST_ADDR = $HOST_ADDR"
 echo "DDDD HOST_USER = $HOST_USER"
 
 if [[ -f /root/.tf/stack.env ]] ; then
