@@ -11,7 +11,7 @@ class HostFixture(fixtures.Fixture):
         logger = logging.getLogger(__name__)
 
         self.hostUser = os.getenv("HOST_USER")
-        self.hostKey = os.getenv("HOST_PK")
+        self.hostKey = os.getenv("HOST_KEY")
         self.host = os.getenv("HOST_ADDR")
         with open(os.path.expanduser('pk.key'),'w') as fd:
             fd.write( self.hostKey )
